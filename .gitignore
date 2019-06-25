@@ -1,0 +1,17 @@
+.dub
+docs.json
+__dummy.html
+docs/
+lib*.a
+lib*.so
+/jdtalk
+jdtalk.so
+jdtalk.dylib
+jdtalk.dll
+jdtalk.a
+jdtalk.lib
+jdtalk-test-*
+*.exe
+*.o
+*.obj
+*.lst

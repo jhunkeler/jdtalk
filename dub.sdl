@@ -1,0 +1,16 @@
+name "jdtalk"
+description "Silly fortune cookie generator"
+authors "Joseph Hunkeler"
+copyright "Copyright © 2019, Joseph Hunkeler"
+license "BSD 3-clause"
+targetType "executable"
+sourcePaths "."
+importPaths "."
+dependency ":core" version="*"
+
+subPackage {
+    name "core"
+    targetType "library"
+    sourcePaths "lib/"
+    importPaths "lib/"
+}
