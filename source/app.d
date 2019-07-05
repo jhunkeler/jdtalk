@@ -21,6 +21,9 @@ int main(string[] args)
     long i = 0,
          limit = 0;
     bool exactMatch = false;
+    bool rCase = false;
+    bool hCase = false;
+    bool haxor = false;
     string pattern = null;
     string dataRoot = absolutePath(getcwd());
 
@@ -33,6 +36,9 @@ int main(string[] args)
         "limit|c", format("(default: %d)", limit), &limit,
         "pattern|p", "Limit output to a root word", &pattern,
         "exact|e", format("Exact matches only (default: %s)", exactMatch ? "true" : "false"), &exactMatch,
+        "rcase", format("Randomize case (default: %s)", rCase ? "true" : "false"), &rCase,
+        "hcase", format("Change every other case (default: %s)", hCase ? "true" : "false"), &hCase,
+        "leet", format("1337ify output (default: %s)", haxor ? "true" : "false"), &haxor,
         "dataroot|d", "Path to dictionaries", &dataRoot,
     );
 
@@ -64,6 +70,16 @@ int main(string[] args)
             else if (!exactMatch && !output.canFind(pattern)) {
                 continue;
             }
+        }
+
+        if (rCase) {
+            output = randomCase(output);
+        }
+        else if (hCase) {
+            output = hillCase(output);
+        }
+        else if (haxor) {
+            output = leetSpeak(output);
         }
 
         writeln(output);

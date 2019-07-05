@@ -2,12 +2,14 @@ module jdtalk.core;
 
 import std.algorithm;
 import std.array;
+import std.ascii;
 import std.file;
 import std.path;
 import std.process : environment;
 import std.random;
 import std.stdio;
 import std.string;
+import std.conv : to;
 
 
 struct dict_t {
@@ -32,6 +34,97 @@ string[] readDict(string filename) {
 
 string word(string[] arr) {
     return arr.choice;
+}
+
+
+string randomCase(string s) {
+    auto SEED = Random(unpredictableSeed);
+    string[] arr = s.split("");
+    ulong count = arr.length;
+    for (ulong i = 0; i < count; i++) {
+        ulong pos = uniform(0, arr.length, SEED);
+        if (arr[pos].to!char.isWhite) {
+            i--;
+            continue;
+        }
+        arr[pos] = arr[pos].toUpper;
+    }
+
+    return arr.join("");
+}
+
+
+string hillCase(string s) {
+    string[] arr = s.split("");
+    for (ulong i = 0; i < arr.length; i++) {
+        if (i % 2) {
+            arr[i] = arr[i].toLower;
+        }
+        else {
+            arr[i] = arr[i].toUpper;
+        }
+    }
+
+    return arr.join("");
+}
+
+
+string leetSpeak(string s) {
+    string[dchar] trx = [
+        'a': "4",
+        'A': "4",
+        'b': "8",
+        'B': "8",
+        'c': "(",
+        'C': "(",
+        'd': ")",
+        'D': ")",
+        'e': "3",
+        'E': "3",
+        'f': "ƒ",
+        'F': "ƒ",
+        'g': "6",
+        'G': "6",
+        'h': "#",
+        'H': "#",
+        'i': "!",
+        'I': "!",
+        'j': "]",
+        'J': "]",
+        'k': "X",
+        'K': "X",
+        'l': "1",
+        'L': "1",
+        'm': "|\\/|",
+        'M': "|\\/|",
+        'n': "|\\|",
+        'N': "|\\|",
+        'o': "0",
+        'O': "0",
+        'p': "|*",
+        'P': "|*",
+        'q': "9",
+        'Q': "9",
+        'r': "|2",
+        'R': "|2",
+        's': "$",
+        'S': "$",
+        't': "7",
+        'T': "7",
+        'u': "|_|",
+        'U': "|_|",
+        'v': "\\/",
+        'V': "\\/",
+        'w': "\\/\\/",
+        'W': "\\/\\/",
+        'x': "><",
+        'X': "><",
+        'y': "¥",
+        'Y': "¥",
+        'z': "2",
+        'Z': "2",
+    ];
+    return translate(s, trx);
 }
 
 
