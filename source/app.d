@@ -20,6 +20,7 @@ int main(string[] args)
     import std.getopt;
     long i = 0,
          limit = 0;
+    int salad = 0;
     bool exactMatch = false;
     bool rCase = false;
     bool hCase = false;
@@ -36,6 +37,7 @@ int main(string[] args)
         "limit|c", format("(default: %d)", limit), &limit,
         "pattern|p", "Limit output to a root word", &pattern,
         "exact|e", format("Exact matches only (default: %s)", exactMatch ? "true" : "false"), &exactMatch,
+        "salad|s", "Produce N random words", &salad,
         "rcase", format("Randomize case (default: %s)", rCase ? "true" : "false"), &rCase,
         "hcase", format("Change every other case (default: %s)", hCase ? "true" : "false"), &hCase,
         "leet", format("1337ify output (default: %s)", haxor ? "true" : "false"), &haxor,
@@ -61,7 +63,14 @@ int main(string[] args)
     }
 
     while(true) {
-        string output = talk(dict);
+        string output;
+
+        if (salad) {
+            output = talkSalad(dict, salad);
+        }
+        else {
+            output = talk(dict);
+        }
 
         if (pattern !is null) {
             if (exactMatch && !hasWord(pattern, output)) {
