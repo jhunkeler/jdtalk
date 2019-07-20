@@ -177,3 +177,12 @@ string talk(ref dict_t dict) {
                 " ");
     return output;
 }
+
+string talkSalad(ref dict_t dict, int words) {
+    string[] salad;
+    for (int i = 0; i < words; i++) {
+        string[] wordList = [dict.noun, dict.verb, dict.adverb, dict.adjective].choice;
+        salad ~= word(wordList);
+    }
+    return salad.join(" ");
+}
