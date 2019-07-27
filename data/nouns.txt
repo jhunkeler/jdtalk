@@ -89940,6 +89940,7 @@ witch-elm
 witch-hunt
 witch-hunts
 witchcraft
+Witcher
 witchery
 witches
 witches'-broom
