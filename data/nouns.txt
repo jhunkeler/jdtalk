@@ -1,4 +1,4 @@
-A-bomb
+kA-bomb
 A-bombs
 A-frame
 ABC
@@ -4515,6 +4515,7 @@ Kodiaks
 Koestler
 Kohen
 Koine
+Kokomo
 Kolyma
 Komintern
 Komsomol
@@ -49520,7 +49521,6 @@ kohlrabi
 kohlrabis
 kok-saghyz
 kokanee
-Kokomo
 kola
 kolas
 kolinskies
