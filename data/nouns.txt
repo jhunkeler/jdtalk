@@ -5556,6 +5556,7 @@ Mobutu
 Mocha
 Modigliani
 Modred
+Mogwai
 Mohammedan
 Mohammedanism
 Mohammedans
@@ -8649,6 +8650,7 @@ Winston
 Winston-Salem
 Wirral
 Wisconsin
+Witcher
 Wittgenstein
 Witwatersrand
 Woden
