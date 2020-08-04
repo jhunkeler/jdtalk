@@ -25120,6 +25120,7 @@ corollaries
 corollary
 corollas
 corona
+coronavirus
 coronach
 coronachs
 coronagraph
@@ -25655,6 +25656,8 @@ coves
 covetousness
 covey
 coveys
+COVID
+COVID-19
 covin
 covins
 cow
