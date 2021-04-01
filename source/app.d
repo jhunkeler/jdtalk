@@ -14,17 +14,17 @@ import std.process : environment;
 
 import jdtalk.core;
 
-
 int main(string[] args)
 {
     import std.getopt;
-    long i = 0,
-         limit = 0;
+    long i = 0;
+    long limit = 0;
     int salad = 0;
     bool exactMatch = false;
     bool rCase = false;
     bool hCase = false;
     bool haxor = false;
+    string custom_format = null;
     string pattern = null;
     string dataRoot = absolutePath(getcwd());
 
@@ -34,6 +34,7 @@ int main(string[] args)
 
     auto opt = getopt(
         args,
+        "format|f", "Produce words with formatted string", &custom_format,
         "limit|c", format("(default: %d)", limit), &limit,
         "pattern|p", "Limit output to a root word", &pattern,
         "exact|e", format("Exact matches only (default: %s)", exactMatch ? "true" : "false"), &exactMatch,
@@ -45,8 +46,7 @@ int main(string[] args)
     );
 
     if (opt.helpWanted) {
-        defaultGetoptPrinter("jdtalk",
-                opt.options);
+        defaultGetoptPrinter("jdtalk", opt.options);
         return 0;
     }
 
@@ -68,8 +68,11 @@ int main(string[] args)
         if (salad) {
             output = talkSalad(dict, salad);
         }
+        else if (custom_format) {
+            output = talkf(dict, custom_format);
+        }
         else {
-            output = talk(dict);
+            output = talkf(dict, "%a %n %d %v");
         }
 
         if (pattern !is null) {

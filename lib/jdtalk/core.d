@@ -186,3 +186,28 @@ string talkSalad(ref dict_t dict, int words) {
     }
     return salad.join(" ");
 }
+
+string talkf(ref dict_t dict, string fmt) {
+    string[] output;
+    for (int i = 0; i < fmt.length; i++) {
+        if (fmt[i] == '%' && (i + 1) < fmt.length) {
+            switch (fmt[i + 1]) {
+                case 'a':
+                    output ~= word(dict.adjective);
+                    break;
+                case 'n':
+                    output ~= word(dict.noun);
+                    break;
+                case 'd':
+                    output ~= word(dict.adverb);
+                    break;
+                case 'v':
+                    output ~= word(dict.verb);
+                    break;
+                default:
+                    continue;
+            }
+        }
+    }
+    return output.join(" ");
+}
