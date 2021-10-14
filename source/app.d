@@ -24,6 +24,7 @@ int main(string[] args)
     bool rCase = false;
     bool hCase = false;
     bool haxor = false;
+    string acronym;
     string custom_format = null;
     string pattern = null;
     string dataRoot = absolutePath(getcwd());
@@ -35,6 +36,7 @@ int main(string[] args)
     auto opt = getopt(
         args,
         "format|f", "Produce words with formatted string", &custom_format,
+        "acronym|a", "Expand characters to acronym", &acronym,
         "limit|c", format("(default: %d)", limit), &limit,
         "pattern|p", "Limit output to a root word", &pattern,
         "exact|e", format("Exact matches only (default: %s)", exactMatch ? "true" : "false"), &exactMatch,
@@ -62,11 +64,22 @@ int main(string[] args)
         return 1;
     }
 
+    if (acronym) {
+        char result = 0;
+        if ((result = acronymSafe(dict, acronym)) > 0) {
+            stderr.writefln("No words start with: '%c'", result);
+            return 1;
+        }
+    }
+
     while(true) {
         string output;
 
         if (salad) {
             output = talkSalad(dict, salad);
+        }
+        else if (acronym) {
+            output = talkAcronym(dict, acronym);
         }
         else if (custom_format) {
             output = talkf(dict, custom_format);
@@ -92,6 +105,20 @@ int main(string[] args)
         }
         else if (haxor) {
             output = leetSpeak(output);
+        }
+
+        if (output == null) {
+            writeln("An error has occurred.");
+            return 1;
+        }
+
+        if (acronym) {
+            // Capitalize each word in the acronym
+            string[] parts;
+            foreach (word; output.split(" ")) {
+                parts ~= word.capitalize;
+            }
+            output = parts.join(" ");
         }
 
         writeln(output);

@@ -140,16 +140,37 @@ bool hasWord(string match, string str) {
 }
 
 
+bool wordStartsWith(ref string[] words, char ch) {
+    foreach (word; words) {
+        if (word.startsWith(ch.to!string)) {
+            return true;
+        }
+    }
+    return false;
+}
+
+
 bool searchDict(dict_t dict, string pattern) {
     bool has_pattern = false;
     foreach (wordList; [dict.noun, dict.verb, dict.adverb, dict.adjective]) {
         foreach (word; wordList) {
             has_pattern = wordList.canFind(pattern);
-            break;
+            if (has_pattern) break;
         }
         if (has_pattern) break;
     }
     return has_pattern;
+}
+
+char acronymSafe(ref dict_t dict, string acronym) {
+    string[] words;
+    words = dict.noun ~ dict.verb ~ dict.adverb ~ dict.adjective;
+    for (int i = 0; i < acronym.length; i++) {
+        if (!wordStartsWith(words, acronym[i])) {
+            return acronym[i];
+        }
+    }
+    return 0;
 }
 
 
@@ -178,6 +199,7 @@ string talk(ref dict_t dict) {
     return output;
 }
 
+
 string talkSalad(ref dict_t dict, int words) {
     string[] salad;
     for (int i = 0; i < words; i++) {
@@ -186,6 +208,7 @@ string talkSalad(ref dict_t dict, int words) {
     }
     return salad.join(" ");
 }
+
 
 string talkf(ref dict_t dict, string fmt) {
     string[] output;
@@ -208,6 +231,26 @@ string talkf(ref dict_t dict, string fmt) {
                     continue;
             }
         }
+    }
+    return output.join(" ");
+}
+
+
+string talkAcronym(ref dict_t dict, string abbrev) {
+    string[] words;
+    string[] output;
+
+    words = dict.noun ~ dict.verb ~ dict.adverb ~ dict.adjective;
+
+    for (int i = 0; i < abbrev.length; i++) {
+        string word = "";
+        while ((word = words.choice) !is null) {
+            if (word.startsWith(abbrev[i].to!char)) {
+                break;
+            }
+        }
+
+        output ~= word;
     }
     return output.join(" ");
 }
