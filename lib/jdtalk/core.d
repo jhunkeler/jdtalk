@@ -153,24 +153,33 @@ bool wordStartsWith(ref string[] words, char ch) {
 bool searchDict(dict_t dict, string pattern) {
     bool has_pattern = false;
     foreach (wordList; [dict.noun, dict.verb, dict.adverb, dict.adjective]) {
-        foreach (word; wordList) {
-            has_pattern = wordList.canFind(pattern);
-            if (has_pattern) break;
+        if ((has_pattern = wordList.canFind(pattern)) == true) {
+            break;
         }
-        if (has_pattern) break;
     }
     return has_pattern;
 }
 
-char acronymSafe(ref dict_t dict, string acronym) {
+char acronymSafe(ref dict_t dict, string acronym, string pattern=null) {
     string[] words;
+    char last = 0;
+
     words = dict.noun ~ dict.verb ~ dict.adverb ~ dict.adjective;
     for (int i = 0; i < acronym.length; i++) {
         if (!wordStartsWith(words, acronym[i])) {
-            return acronym[i];
+            last = acronym[i];
         }
     }
-    return 0;
+
+    bool has_pattern = false;
+    if (pattern) {
+        char check = pattern[0];
+        has_pattern = acronym.canFind(check.to!string);
+        if (!has_pattern) {
+            last = check;
+        }
+    }
+    return last;
 }
 
 
