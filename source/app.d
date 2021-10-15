@@ -16,6 +16,9 @@ import jdtalk.core;
 
 int main(string[] args)
 {
+    setvbuf(stdout.getFP(), null, _IONBF, 0);
+    setvbuf(stderr.getFP(), null, _IONBF, 0);
+
     import std.getopt;
     long i = 0;
     long limit = 0;
@@ -64,10 +67,10 @@ int main(string[] args)
         return 1;
     }
 
-    if (acronym) {
+    if (acronym !is null) {
         char result = 0;
-        if ((result = acronymSafe(dict, acronym)) > 0) {
-            stderr.writefln("No words start with: '%c'", result);
+        if ((result = acronymSafe(dict, acronym, pattern)) > 0) {
+            stderr.writefln("No words will have: '%c'", result);
             return 1;
         }
     }
